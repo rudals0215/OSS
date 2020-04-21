@@ -2,7 +2,7 @@
 #define _EXTRAS_H_
 
 #include "record.h"
-#include "base.h"   // 추가
+#include "base.h"
 
 // function prototypes
 int defragment(PEOPLE[]);
