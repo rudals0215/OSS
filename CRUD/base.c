@@ -1,5 +1,5 @@
 #include "base.h"
-
+#include <stdlib.h>
 void print_all(PEOPLE records[]) {
     // TODO: Modify this function as you need
     if (current_number == 0) {

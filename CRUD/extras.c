@@ -19,7 +19,6 @@ int defragment(PEOPLE records[]) {
 
     return 1;
 }
-
 void sort(PEOPLE records[]) {
     for (int i = 2; i <= current_number; i++) {
 	// Insertion Sort
@@ -34,7 +33,6 @@ void sort(PEOPLE records[]) {
     printf("Sorting Is Complete\n");
     return;
 }
-
 void search(PEOPLE records[]) {
     char name[NAME_SIZE];
     printf("Type Your Name: ");
