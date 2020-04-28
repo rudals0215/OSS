@@ -6,8 +6,8 @@
 
 // function prototypes
 int defragment(PEOPLE[]);
-void Search(PEOPLE[]);
+void search(PEOPLE[]);
 void sort(PEOPLE[]);
-void Service(PEOPLE[]);
+void service(PEOPLE[]);
 
 #endif

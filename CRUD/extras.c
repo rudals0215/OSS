@@ -1,9 +1,5 @@
 #include "extras.h"
 
-// Function: defragment()
-// Input: record - array of Records; this may contain empty elements in the middle
-// Output: 1 if successful, otherwise 0
-// - Leave a brief information about the function
 int defragment(PEOPLE records[]) {
     // Find PEOPLE non-null people at the end
     while (strcmp(records[current_number].name, "null") == 0) {
@@ -21,13 +17,9 @@ int defragment(PEOPLE records[]) {
     }
     printf("defragment succeed\n");
 
-    return 1;    
+    return 1;
 }
 
-// Function: sort()
-// Input: 
-// Output: 
-// 
 void sort(PEOPLE records[]) {
     for (int i = 2; i <= current_number; i++) {
 	// Insertion Sort
@@ -42,15 +34,12 @@ void sort(PEOPLE records[]) {
     printf("Sorting Is Complete\n");
     return;
 }
-// Function: add_a_record()
-// Input: record - array of Records; this may contain empty elements in the middle
-// Output: none
-// The Name Is Entered And All Information Of The Person Is Printed Out
-void Search(PEOPLE records[]) {
+
+void search(PEOPLE records[]) {
     char name[NAME_SIZE];
     printf("Type Your Name: ");
     scanf("%s", name);
-    ClearBuffer();
+    clear_buffer();
     for (int i = 1; i <= current_number; i++) {
 	if (strcmp(name, records[i].name) == 0) {
 	    printf("%s\t%d\t%c\t%d-%02d-%02d\t%d-%02d-%02d\n", records[i].name, records[i].age, records[i].gender,
@@ -63,11 +52,7 @@ void Search(PEOPLE records[]) {
 
 
 }
-// Function: Service()
-// Input: record - array of Records; this may contain empty elements in the middle
-// Output: none
-// Give bonus Month, as service.
-void Service(PEOPLE records[]) {
+void service(PEOPLE records[]) {
     if (current_number < 1) {
 	printf("There Are No Members\n");
 	return;
@@ -78,7 +63,7 @@ void Service(PEOPLE records[]) {
     while (1) {
 	printf("How Many Month Will You Give?\n");
 	scanf("%d", &service_month);
-	ClearBuffer();
+	clear_buffer();
 	if (service_month < 1 || service_month > 12) {
 	    printf("Please Try Again.\n");
 	}

@@ -1,10 +1,6 @@
 #include "base.h"
 
-// Function: print_all_records()
-// Input: record - array of Records; this may contain empty elements in the middle
-// Output: none
-// Print All Information Of People.
-void print_all_records(PEOPLE records[]) {
+void print_all(PEOPLE records[]) {
     // TODO: Modify this function as you need
     if (current_number == 0) {
 	printf("No one is currently registered\n");
@@ -16,25 +12,20 @@ void print_all_records(PEOPLE records[]) {
     }
 
 }
-
-// Function: add_a_record()
-// Input: record - array of Records; this may contain empty elements in the middle
-// Output: none
-// Add People
 void add_a_record(PEOPLE records[]) {
     // TODO : over flow
     current_number++;
 
     printf("Enter Name: ");
     scanf("%s", records[current_number].name);
-    ClearBuffer();
+    clear_buffer();
 
     // Get Age
     while (1) {
 	printf("Enter Age:  ");
 	int age = 0;
 	scanf("%d", &age);
-	ClearBuffer();
+	clear_buffer();
 	if (age < 0 || age > 100) {
 	    printf("Please Try Again.\n");
 	    continue;
@@ -47,7 +38,7 @@ void add_a_record(PEOPLE records[]) {
 	printf("Enter W or M: ");
 	char ch;
 	scanf("%c", &ch);
-	ClearBuffer();
+	clear_buffer();
 	if (ch != 'W' && ch != 'M') {
 	    printf("Please Try Again.\n");
 	    continue;
@@ -56,28 +47,23 @@ void add_a_record(PEOPLE records[]) {
 	break;
     }
 
-    Get_Date(records,current_number);
+    get_date(records, current_number);
 
     printf("New %s is added.\n", records[current_number].name);
 
 }
-
-// Function: Update()
-// Input: 
-// Output: 
-// - Leave a brief information about the function
-void Update(PEOPLE records[]) {
+void update_date(PEOPLE records[]) {
     char name[NAME_SIZE];
 
     printf("Whose Information Would You Like To Change?\n");
     printf("Name: ");
     scanf("%s", name);
-    ClearBuffer();
+    clear_buffer();
 
     for (int i = 1; i <= current_number; i++) {
 	if (strcmp(name, records[i].name) == 0) {
 
-	    Get_Date(records, i);
+	    get_date(records, i);
 
 	    printf("%s Is Updated.\n", records[i].name);
 	    return;
@@ -86,12 +72,7 @@ void Update(PEOPLE records[]) {
 
     printf("There Is No One Named %s\n", name);
 }
-
-// Function: Delete()
-// Input: 
-// Output: 
-// - Leave a brief information about the function
-void Delete(PEOPLE records[]) {
+void delete(PEOPLE records[]) {
     // Check Current_number
     if (current_number < 1) {
 	printf("There Are No Members\n");
@@ -102,11 +83,11 @@ void Delete(PEOPLE records[]) {
     printf("Enter The Name Of The Person You Want To Delete\n");
     printf("Name: ");
     scanf("%s", name);
-    ClearBuffer();
+    clear_buffer();
 
     for (int i = 1; i <= current_number; i++) {
 	if (strcmp(name, records[i].name) == 0) {
-	    strcpy(records[i].name,"null");   // Change Name to NULL
+	    strcpy(records[i].name, "null");   // Change Name to NULL
 
 	    // Initialize gender, Age
 	    records[i].gender = 'M';
@@ -130,16 +111,25 @@ void Delete(PEOPLE records[]) {
 
     printf("There Is No One Named %s\n", name);
 }
+void load_from_txt(PEOPLE records[]) {
+    char filename[20];
+    char txt[10] = ".txt";
 
-// Function: load_Date()
-// Input: 
-// Output: 
-//
-void load_Data(PEOPLE records[]) {
-    FILE* fp = fopen("list.txt", "r");
+    printf("Enter the file name : ");
+    scanf("%s", filename);
+    clear_buffer();
 
-    // Number of lines in file
-    int fileline = lines("list.txt");
+    strcat(filename, txt);
+    printf("filename:: %s\n", filename);
+
+    FILE* fp = fopen(filename, "r");
+    if (fp == NULL) {
+	printf("File Does Not Exist\n");
+	exit(0);
+    }
+
+    // Number of get_lines in file
+    int fileline = get_lines(filename);
 
     for (int i = 0; i < fileline; i++) {
 	current_number++;
@@ -160,24 +150,30 @@ void load_Data(PEOPLE records[]) {
 	fseek(fp, 1, SEEK_CUR);
 	fscanf(fp, "%d", &records[current_number].Expiration_Date.mday);
 
-	//records[temp+i].registeration_Date.year, records[temp+i].registeration_Date.month, records[temp+i].registeration_Date.mday, 
-	//records[temp+i].Expiration_Date.year , records[temp+i].Expiration_Date.month, records[temp+i].Expiration_Date.mday);
-
     }
     printf("Content loaded\n");
 
     fclose(fp);
 }
+void overwrite_from_txt(PEOPLE records[]) {
+    char filename[20];
+    char txt[10] = ".txt";
 
-// Function: over_Write()
-// Input: records- array
-// Output: none
-// Overwrite Contents from .txt file
-void load_Data_OverWrite(PEOPLE records[]) {
-    FILE* fp = fopen("list.txt", "r");
+    printf("Enter the file name : ");
+    scanf("%s", filename);
+    clear_buffer();
 
-    // Number of lines in file
-    int fileline = lines("list.txt");
+    strcat(filename, txt);
+    printf("filename:: %s\n", filename);
+
+    FILE* fp = fopen(filename, "r");
+    if (fp == NULL) {
+	printf("File Does Not Exist\n");
+	exit(0);
+    }
+
+    // Number of get_lines in file
+    int fileline = get_lines(filename);
 
     for (int i = 1; i <= fileline; i++) {
 	fscanf(fp, "%s %d %c", records[i].name, &records[i].age, &records[i].gender);
@@ -201,35 +197,39 @@ void load_Data_OverWrite(PEOPLE records[]) {
 
     fclose(fp);
 }
+void save_to_txt(PEOPLE records[]) {
+    char filename[20];
+    char txt[10] = ".txt";
 
-// Function: save_Data()
-// Input: records- array
-// Output:
-// Save The Contents Again as a .txt file
-void save_Data(PEOPLE records[]) {
-    FILE* fp = fopen("list.txt", "w");
+    printf("Enter the file name : ");
+    scanf("%s", filename);
+    clear_buffer();
 
-    for (int i = 1; i <= current_number ; i++) {
+    strcat(filename, txt);
+    printf("filename:: %s\n", filename);
+
+    FILE* fp = fopen(filename, "w");
+
+    for (int i = 1; i <= current_number; i++) {
 
 	// 파일에 각 사람의 정보 입력하기.
 	fprintf(fp, "%s %d %c ", records[i].name, records[i].age, records[i].gender);
-	fprintf(fp, "%d-%d-%d ", records[i].registeration_Date.year,records[i].registeration_Date.month,records[i].registeration_Date.mday);
+	fprintf(fp, "%d-%d-%d ", records[i].registeration_Date.year, records[i].registeration_Date.month, records[i].registeration_Date.mday);
 	fprintf(fp, "%d-%d-%d", records[i].Expiration_Date.year, records[i].Expiration_Date.month, records[i].Expiration_Date.mday);
 
-	if(current_number != i) fprintf(fp, "\n");
+	if (current_number != i) fprintf(fp, "\n");
 
     }
     printf("Content Updated\n");
 
     fclose(fp);
 }
-
-void Get_Date(PEOPLE records[], int n) {
+void get_date(PEOPLE records[], int n) {
     while (1) {
 	printf("Enter Start Year: ");
 	int year = 0;
 	scanf("%d", &year);
-	ClearBuffer();
+	clear_buffer();
 	if (year < 2000 || year>2020) {
 	    printf("Wrong Input Please Try Again\n");
 	    continue;
@@ -242,7 +242,7 @@ void Get_Date(PEOPLE records[], int n) {
 	printf("Enter Start Month: ");
 	int month = 0;
 	scanf("%d", &month);
-	ClearBuffer();
+	clear_buffer();
 	if (month < 0 || month>12) {
 	    printf("Wrong Input Please Try Again\n");
 	    continue;
@@ -255,7 +255,7 @@ void Get_Date(PEOPLE records[], int n) {
 	printf("Enter Start mDay: ");
 	int day = 0;
 	scanf("%d", &day);
-	ClearBuffer();
+	clear_buffer();
 	if (day > 31 || day < 0) {
 	    printf("Wrong Input Please Try Again\n");
 	    continue;
@@ -268,7 +268,7 @@ void Get_Date(PEOPLE records[], int n) {
     while (1) {
 	printf("How Many Months Do You Want?: ");
 	scanf("%d", &want);
-	ClearBuffer();
+	clear_buffer();
 	if (want < 0 || want>12) {
 	    printf("Wrong Input Please Try Again\n");
 	    continue;
@@ -280,7 +280,7 @@ void Get_Date(PEOPLE records[], int n) {
     records[n].Expiration_Date.month = records[n].registeration_Date.month;
     records[n].Expiration_Date.mday = records[n].registeration_Date.mday;
 
-    // Calculation
+    // calculation
     if (want + records[n].registeration_Date.month > 12) {
 	records[n].Expiration_Date.year++;
 	records[n].Expiration_Date.month -= 12;
@@ -289,12 +289,12 @@ void Get_Date(PEOPLE records[], int n) {
 
 
 }
-void ClearBuffer() {
+void clear_buffer() {
     while (getchar() != '\n');  // Clean Buffer
 }
-int lines(char filename[]) {
+int get_lines(char filename[]) {
     FILE* fp;
-    int line = 0;
+    int line = 1;
     fp = fopen(filename, "r");
     char c;
     while ((c = fgetc(fp)) != EOF)
