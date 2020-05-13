@@ -14,4 +14,5 @@ void overwrite_from_txt(PEOPLE[]); // 8
 void get_date(PEOPLE[], int n);
 void clear_buffer(void);
 int get_lines(char filename[]);
+void delete_but_all(PEOPLE[]); // 12
 #endif
