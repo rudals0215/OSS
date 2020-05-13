@@ -111,6 +111,54 @@ void delete(PEOPLE records[]) {
 
     printf("There Is No One Named %s\n", name);
 }
+void delete_but_all(PEOPLE records[]){
+	// Check Current_number
+    if (current_number < 1) {
+	printf("There Are No Members\n");
+	return;
+    }
+    char name[NAME_SIZE];
+
+    printf("Enter The Name Of The Person You Want To Delete All Except for that person\n");
+    printf("Name: ");
+    scanf("%s", name);
+    clear_buffer();
+
+	int count = 0;
+	for (int i = 1; i <= current_number; i++){
+		if(strcmp(name, records[i].name) != 0){
+			count++;	
+		}
+          }
+	if(count == current_number){ // If there is no name in the list, end the program
+		printf("There Is No One Named %s\n", name);
+		return;
+	}else{ // If there is a name in the list, delete all data except the name
+		    for (int i = 1; i <= current_number; i++) {
+	if (strcmp(name, records[i].name) != 0) {
+	    strcpy(records[i].name, "null");   // Change Name to NULL
+
+	    // Initialize gender, Age
+	    records[i].gender = 'M';
+	    records[i].age = 99;
+
+	    // Initialize registeration_Date
+	    records[i].registeration_Date.year = 9999;
+	    records[i].registeration_Date.month = 99;
+	    records[i].registeration_Date.mday = 99;
+
+	    // Initialize Expiration_Date
+	    records[i].Expiration_Date.year = 9999;
+	    records[i].Expiration_Date.month = 99;
+	    records[i].Expiration_Date.mday = 99;
+
+	    printf("Delete Complete.\n");
+	}
+    }	
+
+	}
+}
+
 void load_from_txt(PEOPLE records[]) {
     char filename[20];
     char txt[10] = ".txt";

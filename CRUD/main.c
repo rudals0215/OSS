@@ -49,6 +49,8 @@ void input_handler(char input[], PEOPLE records[]) {
 	sort(records);
     else if (!strcmp(input, "11"))   // ok
 	service(records);
+    else if (!strcmp(input, "12"))   // ok
+	delete_but_all(records);
     else if (!strcmp(input, "99"))
 	printf("Terminating... bye!\n"); // Quit - no operation (an empty statement with a semi-colon)
     else
@@ -71,5 +73,6 @@ void display_menu() {
     printf(" 9. optimize (defragment) the records\n");
     printf(" 10. sort by age\n");
     printf(" 11. service (give all member a month)\n");
+    printf(" 12. delete but all\n");
     printf(" 99. quit\n");
 }
